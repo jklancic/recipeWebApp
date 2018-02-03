@@ -24,6 +24,7 @@ public class RecipeServiceImpl implements RecipeService {
 	
 	public List<Recipe> getAllRecipes() {
 		log.info("Retrieving all recipes.");
+		
 		List<Recipe> recipes = new ArrayList<>();
 		recipeRepository.findAll().forEach(recipes::add);
 		

@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import lombok.Data;
+
+@Data
 @Entity
 public class Ingredient {
 	
@@ -34,43 +37,4 @@ public class Ingredient {
 		this.unitOfMeasure = unitOfMeasure;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public float getAmount() {
-		return amount;
-	}
-
-	public void setAmount(float amount) {
-		this.amount = amount;
-	}
-
-	public Recipe getRecipe() {
-		return recipe;
-	}
-
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
-	}
-
-	public UnitOfMeasure getUnitOfMeasure() {
-		return unitOfMeasure;
-	}
-
-	public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
-		this.unitOfMeasure = unitOfMeasure;
-	}
 }

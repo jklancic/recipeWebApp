@@ -3,6 +3,8 @@ package xyz.blackmonster.recipewebapp.bootstrap;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -17,6 +19,7 @@ import xyz.blackmonster.recipewebapp.repositories.CategoryRepository;
 import xyz.blackmonster.recipewebapp.repositories.RecipeRepository;
 import xyz.blackmonster.recipewebapp.repositories.UnitOfMeasureRepository;
 
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 	
@@ -34,7 +37,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 	}
 
 	private List<Recipe> initData() {
-
+		log.debug("Initializing data.");
+		
 		UnitOfMeasure ounce = unitOfMeasureRepository.findByUom("Ounce").get();
 		UnitOfMeasure dash = unitOfMeasureRepository.findByUom("Dash").get();
 		UnitOfMeasure tablespoon = unitOfMeasureRepository.findByUom("Tablespoon").get();
@@ -79,11 +83,13 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		recipes.add(recipe1);
 		recipes.add(recipe2);
 		
+		log.debug("Returning list:" + recipes);
 		return recipes;
 	}
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+		log.debug("Context is refreshed. Data is being initialized.");
 		recipeRepository.saveAll(initData());
 	}
 }

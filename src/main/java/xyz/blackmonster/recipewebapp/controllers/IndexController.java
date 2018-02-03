@@ -2,6 +2,8 @@ package xyz.blackmonster.recipewebapp.controllers;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import xyz.blackmonster.recipewebapp.repositories.CategoryRepository;
 import xyz.blackmonster.recipewebapp.repositories.UnitOfMeasureRepository;
 import xyz.blackmonster.recipewebapp.services.RecipeService;
 
+@Slf4j
 @Controller
 public class IndexController {
 	
@@ -27,8 +30,11 @@ public class IndexController {
 
 	@RequestMapping({"", "/", "/index"})
 	public String getIndexPage(Model model) {
+		log.debug("Retrieving index page.");
+		
 		List<Recipe> recipes = recipeService.getAllRecipes();
 		model.addAttribute("recipes", recipes);
+		
 		return INDEX;
 	}
 }
