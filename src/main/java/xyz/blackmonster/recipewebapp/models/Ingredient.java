@@ -1,6 +1,7 @@
 package xyz.blackmonster.recipewebapp.models;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,10 +19,10 @@ public class Ingredient {
 	
 	private float amount;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Recipe recipe;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	private UnitOfMeasure unitOfMeasure;
 
 	public long getId() {
