@@ -15,6 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Data
+@EqualsAndHashCode(exclude = {"recipes"})
 @Entity
 public class Category {
 	
@@ -26,5 +27,4 @@ public class Category {
 	
 	@ManyToMany(mappedBy = "categories")
 	private Set<Recipe> recipes;
-
 }

@@ -9,8 +9,10 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Notes {
 	
@@ -23,7 +25,7 @@ public class Notes {
 	
 	@Lob
 	private String recipeNotes;
-
+	
 	public Notes() {
 	}
 	

@@ -83,7 +83,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		recipes.add(recipe1);
 		recipes.add(recipe2);
 		
-		log.debug("Returning list:" + recipes);
 		return recipes;
 	}
 

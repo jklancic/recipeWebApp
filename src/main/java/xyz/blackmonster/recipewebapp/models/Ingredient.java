@@ -9,8 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Ingredient {
 	
@@ -27,10 +29,10 @@ public class Ingredient {
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	private UnitOfMeasure unitOfMeasure;
-	
+
 	public Ingredient() {
 	}
-
+	
 	public Ingredient(String description, float amount, UnitOfMeasure unitOfMeasure) {
 		this.description = description;
 		this.amount = amount;
