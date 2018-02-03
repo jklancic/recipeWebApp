@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Ingredient {
@@ -19,6 +20,9 @@ public class Ingredient {
 	
 	@ManyToOne
 	private Recipe recipe;
+	
+	@OneToOne
+	private UnitOfMeasure unitOfMeasure;
 
 	public long getId() {
 		return id;
