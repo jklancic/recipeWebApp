@@ -24,9 +24,8 @@ public class Notes {
 	public Notes() {
 	}
 	
-	public Notes(String recipeNotes, Recipe recipe) {
+	public Notes(String recipeNotes) {
 		this.recipeNotes = recipeNotes;
-		this.recipe = recipe;
 	}
 
 	public long getId() {

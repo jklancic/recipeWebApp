@@ -28,11 +28,10 @@ public class Ingredient {
 	public Ingredient() {
 	}
 
-	public Ingredient(String description, float amount, UnitOfMeasure unitOfMeasure, Recipe recipe) {
+	public Ingredient(String description, float amount, UnitOfMeasure unitOfMeasure) {
 		this.description = description;
 		this.amount = amount;
 		this.unitOfMeasure = unitOfMeasure;
-		this.recipe = recipe;
 	}
 
 	public long getId() {

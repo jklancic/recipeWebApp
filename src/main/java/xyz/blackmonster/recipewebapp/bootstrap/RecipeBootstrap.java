@@ -54,11 +54,11 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		recipe1.setDirections("First glaze oil on the salmon, add the cut garlic and leave the salmon in the oven at 250 degrees.");
 		recipe1.getCategories().add(slovenian);
 		recipe1.getCategories().add(italian);
-		recipe1.getIngredients().add(new Ingredient("Salmon", 8, ounce, recipe1));
-		recipe1.getIngredients().add(new Ingredient("Salt", 1, dash, recipe1));
-		recipe1.getIngredients().add(new Ingredient("Oil", 1, tablespoon, recipe1));
-		recipe1.getIngredients().add(new Ingredient("Onions", 1, ounce, recipe1));
-		recipe1.setNotes(new Notes("Make sure to not overcook the salmon, while staying in the oven.\nAlso make sure to cook it evenly.", recipe1));
+		recipe1.addIngredient(new Ingredient("Salmon", 8, ounce));
+		recipe1.addIngredient(new Ingredient("Salt", 1, dash));
+		recipe1.addIngredient(new Ingredient("Oil", 1, tablespoon));
+		recipe1.addIngredient(new Ingredient("Onions", 1, ounce));
+		recipe1.setNotes(new Notes("Make sure to not overcook the salmon, while staying in the oven.\nAlso make sure to cook it evenly."));
 		
 		Recipe recipe2 = new Recipe();
 		recipe2.setName("Pepperoni pizza");
@@ -69,11 +69,11 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		recipe2.setDirections("Roll up the dough, add the sauce, add pepperoni and add the cheese. Leave in the oven at 300 degrees.");
 		recipe2.getCategories().add(italian);
 		recipe2.getCategories().add(american);
-		recipe2.getIngredients().add(new Ingredient("Pepperoni", 8, slice, recipe2));
-		recipe2.getIngredients().add(new Ingredient("Cheese", 8, slice, recipe2));
-		recipe2.getIngredients().add(new Ingredient("Dough", 8, ounce, recipe2));
-		recipe2.getIngredients().add(new Ingredient("Pizza sauce", 1, cup, recipe2));
-		recipe2.setNotes(new Notes("Make sure to properly flatten the dough.\nAlso make sure to check on the pizza every 5 min to not burn it. You want a crispy golden yellow on the top, when the cheese melts.", recipe2));
+		recipe2.addIngredient(new Ingredient("Pepperoni", 8, slice));
+		recipe2.addIngredient(new Ingredient("Cheese", 8, slice));
+		recipe2.addIngredient(new Ingredient("Dough", 8, ounce));
+		recipe2.addIngredient(new Ingredient("Pizza sauce", 1, cup));
+		recipe2.setNotes(new Notes("Make sure to properly flatten the dough.\nAlso make sure to check on the pizza every 5 min to not burn it. You want a crispy golden yellow on the top, when the cheese melts."));
 		
 		List<Recipe> recipes = new ArrayList<>();
 		recipes.add(recipe1);
