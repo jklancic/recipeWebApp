@@ -10,21 +10,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import xyz.blackmonster.recipewebapp.models.Recipe;
-import xyz.blackmonster.recipewebapp.repositories.CategoryRepository;
-import xyz.blackmonster.recipewebapp.repositories.UnitOfMeasureRepository;
 import xyz.blackmonster.recipewebapp.services.RecipeService;
 
 @Slf4j
 @Controller
 public class IndexController {
 	
-	private static final String INDEX = "index";
+	public static final String INDEX = "index";
 	
 	private final RecipeService recipeService;
 
 	@Autowired
-	public IndexController(CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository, 
-												 RecipeService recipeService) {
+	public IndexController(RecipeService recipeService) {
 		this.recipeService = recipeService;
 	}
 
