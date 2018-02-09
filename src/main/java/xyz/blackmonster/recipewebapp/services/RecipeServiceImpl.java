@@ -2,6 +2,9 @@ package xyz.blackmonster.recipewebapp.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,5 +32,16 @@ public class RecipeServiceImpl implements RecipeService {
 		recipeRepository.findAll().forEach(recipes::add);
 		
 		return recipes;
+	}
+	
+	public Recipe getRecipeById(long id) throws EntityNotFoundException {
+		log.info("Retrieving recipe by ID.");
+		
+		Optional<Recipe> optional = recipeRepository.findById(id);
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		
+		throw new EntityNotFoundException("Recipe not found.");
 	}
 }
