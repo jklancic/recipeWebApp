@@ -17,6 +17,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import xyz.blackmonster.recipewebapp.converters.RecipeCommandConverter;
+import xyz.blackmonster.recipewebapp.converters.RecipeConverter;
 import xyz.blackmonster.recipewebapp.models.Recipe;
 import xyz.blackmonster.recipewebapp.repositories.RecipeRepository;
 
@@ -26,12 +28,16 @@ public class RecipeServiceImplTest {
 	
 	@Mock
 	private RecipeRepository recipeRepository;
+	@Mock
+	private RecipeConverter recipeConverter;
+	@Mock
+	private RecipeCommandConverter recipeCommandConverter;
 	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		
-		recipeService = new RecipeServiceImpl(recipeRepository);
+		recipeService = new RecipeServiceImpl(recipeRepository, recipeConverter, recipeCommandConverter);
 	}
 
 	@Test

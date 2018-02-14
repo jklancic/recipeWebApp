@@ -63,11 +63,17 @@ public class Recipe {
 	private Set<Category> categories = new HashSet<>();
 	
 	public void setNotes(Notes notes) {
+		if(notes == null) {
+			return;
+		}
 		notes.setRecipe(this);
 		this.notes = notes;
 	}
 	
 	public Recipe addIngredient(Ingredient ingredient) {
+		if(ingredient == null) {
+			return this;
+		}
 		ingredient.setRecipe(this);
 		ingredients.add(ingredient);
 		return this;
