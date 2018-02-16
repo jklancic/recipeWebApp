@@ -2,6 +2,7 @@ package xyz.blackmonster.recipewebapp.controllers;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -46,7 +47,7 @@ public class RecipeControllerTest {
 		
 		when(recipeService.getRecipeById(eq(id))).thenReturn(recipe);
 		
-		mockMvc.perform(get("/recipe/show/1"))
+		mockMvc.perform(get("/recipe/1/show"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("recipe/show"))
 			.andExpect(model().attributeExists("recipe"));
@@ -87,5 +88,17 @@ public class RecipeControllerTest {
 			.param("description", "Some description"))
 			.andExpect(status().is3xxRedirection())
 			.andExpect(view().name("redirect:/recipe/show/1"));
+	}
+	
+	@Test
+	public void testDelete() throws Exception {
+		long id = 1L;
+		
+		doNothing().when(recipeService).deleteById(eq(id));
+
+		mockMvc.perform(get("/recipe/1/delete"))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(view().name("redirect:/"))
+			.andExpect(model().attributeDoesNotExist("recipe"));
 	}
 }
