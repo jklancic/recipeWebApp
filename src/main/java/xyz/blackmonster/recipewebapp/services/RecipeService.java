@@ -14,4 +14,6 @@ public interface RecipeService {
 	Recipe getRecipeById(long id) throws EntityNotFoundException;
 	
 	RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand);
+	
+	RecipeCommand findRecipeCommandById(long id);
 }

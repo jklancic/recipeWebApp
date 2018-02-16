@@ -2,6 +2,8 @@ package xyz.blackmonster.recipewebapp.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -17,6 +19,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import xyz.blackmonster.recipewebapp.commands.RecipeCommand;
 import xyz.blackmonster.recipewebapp.converters.RecipeCommandConverter;
 import xyz.blackmonster.recipewebapp.converters.RecipeConverter;
 import xyz.blackmonster.recipewebapp.models.Recipe;
@@ -70,5 +73,45 @@ public class RecipeServiceImplTest {
 		assertEquals(recipeName, returnedRecipe.getName());
 		verify(recipeRepository, times(1)).findById(eq(recipeId));
 		verify(recipeRepository, never()).findAll();
+	}
+	
+	@Test
+	public void testSaveRecipeCommand() {
+		long id = 1L;
+		String description = "Recipe description";
+		
+		RecipeCommand command = new RecipeCommand();
+		command.setId(id);
+		command.setDescription(description);
+		Recipe model = new Recipe();
+		model.setId(id);
+		model.setDescription(description);
+		
+		when(recipeConverter.convert(any(RecipeCommand.class))).thenReturn(model);
+		when(recipeRepository.save(any(Recipe.class))).thenReturn(model);
+		when(recipeCommandConverter.convert(any(Recipe.class))).thenReturn(command);
+		
+		RecipeCommand returnCommand = recipeService.saveRecipeCommand(command);
+		
+		assertEquals(id, returnCommand.getId());
+		assertEquals(description, returnCommand.getDescription());
+	}
+	
+	@Test
+	public void testFindRecipeCommandById() {
+		long id = 1L;
+		String description = "Recipe description";
+
+		RecipeCommand command = new RecipeCommand();
+		command.setId(id);
+		command.setDescription(description);
+		
+		when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(new Recipe()));
+		when(recipeCommandConverter.convert(any(Recipe.class))).thenReturn(command);
+
+		RecipeCommand returnCommand = recipeService.findRecipeCommandById(id);
+
+		assertEquals(id, returnCommand.getId());
+		assertEquals(description, returnCommand.getDescription());
 	}
 }
