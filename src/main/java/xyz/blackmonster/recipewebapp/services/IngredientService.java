@@ -1,8 +1,8 @@
 package xyz.blackmonster.recipewebapp.services;
 
-import xyz.blackmonster.recipewebapp.commands.RecipeCommand;
+import xyz.blackmonster.recipewebapp.commands.IngredientCommand;
 
 public interface IngredientService {
 	
-	RecipeCommand listIngredients(long recipeId);
+	IngredientCommand findByRecipeIdAndIngredientId(long recipeId, long ingredientId);
 }

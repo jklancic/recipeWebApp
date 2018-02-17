@@ -10,6 +10,7 @@ import lombok.Setter;
 public class IngredientCommand {
 
 	private long id;
+	private long recipeId;
 	private String description;
 	private float amount;
 	private UnitOfMeasureCommand unitOfMeasureCommand;

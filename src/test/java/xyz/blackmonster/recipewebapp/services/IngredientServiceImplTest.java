@@ -1,18 +1,27 @@
 package xyz.blackmonster.recipewebapp.services;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Collections;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import xyz.blackmonster.recipewebapp.commands.RecipeCommand;
+import xyz.blackmonster.recipewebapp.commands.IngredientCommand;
 import xyz.blackmonster.recipewebapp.converters.IngredientCommandConverter;
 import xyz.blackmonster.recipewebapp.converters.IngredientConverter;
+import xyz.blackmonster.recipewebapp.models.Ingredient;
+import xyz.blackmonster.recipewebapp.models.Recipe;
 import xyz.blackmonster.recipewebapp.repositories.IngredientRepository;
+import xyz.blackmonster.recipewebapp.repositories.RecipeRepository;
 
 public class IngredientServiceImplTest {
 	
@@ -23,7 +32,7 @@ public class IngredientServiceImplTest {
 	@Mock
 	private IngredientCommandConverter ingredientCommandConverter;
 	@Mock
-	private RecipeService recipeService;
+	private RecipeRepository recipeRepository;
 	
 	private IngredientService ingredientService;
 	
@@ -32,18 +41,26 @@ public class IngredientServiceImplTest {
 		MockitoAnnotations.initMocks(this);
 		
 		ingredientService = new IngredientServiceImpl(
-			ingredientRepository, ingredientConverter, ingredientCommandConverter, recipeService);
+			ingredientRepository, ingredientConverter, ingredientCommandConverter, recipeRepository);
 	}
 	
 	@Test
-	public void testListIngredients() {
+	public void testFindByRecipeIdAndIngredientId() {
 		long id = 1L;
-		RecipeCommand command = new RecipeCommand();
-		command.setId(id);
+		Ingredient ingredient = new Ingredient();
+		ingredient.setId(id);
+		Recipe recipe = new Recipe();
+		recipe.setId(id);
+		recipe.setIngredients(Collections.singleton(ingredient));
+		IngredientCommand ingredientCommand = new IngredientCommand();
+		ingredientCommand.setId(id);
 		
-		when(recipeService.findRecipeCommandById(eq(id))).thenReturn(command);
+		when(recipeRepository.findById(eq(id))).thenReturn(Optional.of(recipe));
+		when(ingredientCommandConverter.convert(any(Ingredient.class))).thenReturn(ingredientCommand);
 		
-		RecipeCommand returnCommand = ingredientService.listIngredients(id);
+		IngredientCommand returnCommand = ingredientService.findByRecipeIdAndIngredientId(id, id);
 		assertEquals(id, returnCommand.getId());
+		verify(recipeRepository, times(1)).findById(eq(id));
+		verify(ingredientCommandConverter, times(1)).convert(any(Ingredient.class));
 	}
 }
