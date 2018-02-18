@@ -7,6 +7,7 @@ import guru.springframework.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import guru.springframework.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework.domain.Ingredient;
 import guru.springframework.domain.Recipe;
+import guru.springframework.repositories.IngredientRepository;
 import guru.springframework.repositories.RecipeRepository;
 import guru.springframework.repositories.UnitOfMeasureRepository;
 import org.junit.Before;
@@ -30,6 +31,9 @@ public class IngredientServiceImplTest {
 
     @Mock
     UnitOfMeasureRepository unitOfMeasureRepository;
+    
+    @Mock
+    IngredientRepository ingredientRepository;
 
     IngredientService ingredientService;
 
@@ -44,7 +48,7 @@ public class IngredientServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient,
-                recipeRepository, unitOfMeasureRepository);
+                recipeRepository, unitOfMeasureRepository, ingredientRepository);
     }
 
     @Test
@@ -52,7 +56,7 @@ public class IngredientServiceImplTest {
     }
 
     @Test
-    public void findByRecipeIdAndReceipeIdHappyPath() throws Exception {
+    public void findByRecipeIdAndRecipeIdHappyPath() throws Exception {
         //given
         Recipe recipe = new Recipe();
         recipe.setId(1L);
@@ -81,22 +85,24 @@ public class IngredientServiceImplTest {
         assertEquals(Long.valueOf(1L), ingredientCommand.getRecipeId());
         verify(recipeRepository, times(1)).findById(anyLong());
     }
-
-
+    
     @Test
     public void testSaveRecipeCommand() throws Exception {
         //given
         IngredientCommand command = new IngredientCommand();
         command.setId(3L);
         command.setRecipeId(2L);
+        command.setDescription("Description");
 
         Optional<Recipe> recipeOptional = Optional.of(new Recipe());
 
         Recipe savedRecipe = new Recipe();
-        savedRecipe.addIngredient(new Ingredient());
-        savedRecipe.getIngredients().iterator().next().setId(3L);
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(3L);
+        savedRecipe.addIngredient(ingredient);
 
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(ingredientRepository.save(any(Ingredient.class))).thenReturn(ingredient);
         when(recipeRepository.save(any())).thenReturn(savedRecipe);
 
         //when
