@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Edit Ingredient</title>
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          src="/webjars/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script href="http://code.jquery.com/jquery-3.3.1.min.js"
-            src="/webjars/jquery/3.3.1/jquery.js"></script>
-    <script href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+
+    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 </head>
 <body>
 
@@ -19,13 +23,13 @@
             <!--/*@thymesVar id="ingredient" type="guru.springframework.commands.IngredientCommand"*/-->
             <form  th:object="${ingredient}" th:action="@{'/recipe/' + ${ingredient.getRecipeId()} + '/ingredient'} ">
                 <input type="hidden" th:field="*{id}"/>
-                <input type="hidden" th:field="*{recipeId}"/>
                 <div class="pannel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h1 class="panel-title">Edit Ingredient Information</h1>
                         </div>
                         <div class="panel-body">
+
 
                             <div class="row">
                                 <div class="col-md-3 form-group">
@@ -40,11 +44,11 @@
 
                                 <div class="col-md-3 form-group">
                                     <label>UOM:</label>
-                                    <select class="form-control" name="unitOfMeasureCommand.id">
+                                    <select class="form-control" name="uom.id">
                                         <option th:each="uomEach : ${uomList}"
-                                                th:value="${uomEach.getId()}"
-                                                th:selected="${uomEach.id.equals(ingredient.getUnitOfMeasureCommand().getId())}"
-                                                th:text="${uomEach.getUom()}">Each</option>
+                                                th:value="${uomEach.id}"
+                                                th:selected="${uomEach.id.equals(ingredient.uom.id)}"
+                                                th:text="${uomEach.description}">Each</option>
                                     </select>
                                 </div>
                             </div>

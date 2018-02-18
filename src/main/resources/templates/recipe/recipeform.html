@@ -4,12 +4,17 @@
     <meta charset="UTF-8"/>
     <title>Recipe Form</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          src="/webjars/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script href="http://code.jquery.com/jquery-3.3.1.min.js"
-            src="/webjars/jquery/3.3.1/jquery.js"></script>
-    <script href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+
+    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 </head>
 <body>
 <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
@@ -90,19 +95,20 @@
                                     <h1 class="panel-title">Ingredients</h1>
                                 </div>
                                 <div class="col-md-1">
-                                    <a class="btn btn-default" href="#" role="button">Edit</a>
+                                    <a class="btn btn-default" href="#" role="button">View</a>
                                 </div>
                             </div>
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <ul>
+                                    <ul th:if="${not #lists.isEmpty(recipe.ingredients)}">
                                         <li th:remove="all">1 Cup of milk</li>
                                         <li th:remove="all">1 Teaspoon of chocolate</li>
-                                        <li th:each="ingredient : ${recipe.getIngredients()}"
+                                        <li th:remove="all">asdf</li>
+                                        <li th:each="ingredient : ${recipe.ingredients}"
                                             th:text="${(ingredient.getAmount() +
-                                        ' ' + ingredient.getUnitOfMeasureCommand().getUom() +
+                                        ' ' + ingredient.uom.getDescription() +
                                         ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar
                                         </li>
                                     </ul>
