@@ -1,5 +1,12 @@
 package guru.springframework.controllers;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import guru.springframework.commands.RecipeCommand;
 import guru.springframework.services.ImageService;
 import guru.springframework.services.RecipeService;
 
@@ -24,18 +32,36 @@ public class ImageController {
 		this.recipeService = recipeService;
 	}
 
-	@GetMapping("recipe/{id}/image")
+	@GetMapping("/recipe/{id}/image")
 	public String showUploadForm(@PathVariable String id, Model model){
 		model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
 
 		return "recipe/imageuploadform";
 	}
 
-	@PostMapping("recipe/{id}/image")
+	@PostMapping("/recipe/{id}/image")
 	public String handleImagePost(@PathVariable String id, @RequestParam("imagefile") MultipartFile file){
 
 		imageService.saveFileImage(Long.valueOf(id), file);
 
 		return "redirect:/recipe/" + id + "/show";
 	}
+	
+	@GetMapping("/recipe/{id}/recipeimage")
+	public void renderImageFromDb(@PathVariable String id, HttpServletResponse response) throws IOException {
+		RecipeCommand command = recipeService.findCommandById(Long.valueOf(id));
+
+		if (command.getImage() != null) {
+			byte[] byteArray = new byte[command.getImage().length];
+			int i = 0;
+
+			for (Byte wrappedByte : command.getImage()){
+				byteArray[i++] = wrappedByte; //auto unboxing
+			}
+
+			response.setContentType("image/jpeg");
+			InputStream is = new ByteArrayInputStream(byteArray);
+			IOUtils.copy(is, response.getOutputStream());
+		}
+	} 
 }
