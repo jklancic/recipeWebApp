@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import xyz.blackmonster.recipewebapp.commands.IngredientCommand;
 import xyz.blackmonster.recipewebapp.models.Ingredient;
+import xyz.blackmonster.recipewebapp.models.Recipe;
 
 @Component
 public class IngredientConverter implements Converter<IngredientCommand, Ingredient> {
@@ -25,6 +26,14 @@ public class IngredientConverter implements Converter<IngredientCommand, Ingredi
 		
 		Ingredient ingredient = new Ingredient();
 		ingredient.setId(ingredientCommand.getId());
+
+		if(ingredientCommand.getRecipeId() != 0){
+			Recipe recipe = new Recipe();
+			recipe.setId(ingredientCommand.getRecipeId());
+			ingredient.setRecipe(recipe);
+			recipe.addIngredient(ingredient);
+		}
+		
 		ingredient.setDescription(ingredientCommand.getDescription());
 		ingredient.setAmount(ingredientCommand.getAmount());
 		ingredient.setUnitOfMeasure(unitOfMeasureConverter.convert(ingredientCommand.getUnitOfMeasureCommand()));
